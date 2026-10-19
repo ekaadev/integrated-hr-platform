@@ -1,0 +1,101 @@
+# Production MVP: seluruh aplikasi di satu VPS dengan Docker Compose.
+#
+#   cp infra/env/*.env.example -> infra/env/*.env (isi nilai production)
+#   docker compose -f infra/compose.prod.yml --env-file infra/env/caddy.env up -d --build
+#   docker compose -f infra/compose.prod.yml --env-file infra/env/caddy.env run --rm hris-api bun dist/db/migrate.js
+name: hr-platform-prod
+
+x-api: &api
+  restart: unless-stopped
+  depends_on:
+    postgres:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:17.6-alpine
+    restart: unless-stopped
+    env_file: env/postgres.env
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d postgres"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+  hris-api:
+    <<: *api
+    build: { context: .., dockerfile: infra/docker/api.Dockerfile, args: { APP: hris } }
+    env_file: env/hris.env
+  kpi-api:
+    <<: *api
+    build: { context: .., dockerfile: infra/docker/api.Dockerfile, args: { APP: kpi } }
+    env_file: env/kpi.env
+  feedback-360-api:
+    <<: *api
+    build: { context: .., dockerfile: infra/docker/api.Dockerfile, args: { APP: feedback-360 } }
+    env_file: env/feedback-360.env
+    # Ollama berjalan langsung di host (mesin dengan GPU), bukan di container.
+    extra_hosts: ["host.docker.internal:host-gateway"]
+  lms-api:
+    <<: *api
+    build: { context: .., dockerfile: infra/docker/api.Dockerfile, args: { APP: lms } }
+    env_file: env/lms.env
+  prisma-api:
+    <<: *api
+    build: { context: .., dockerfile: infra/docker/api.Dockerfile, args: { APP: prisma } }
+    env_file: env/prisma.env
+
+  caddy:
+    restart: unless-stopped
+    build:
+      context: ..
+      dockerfile: infra/docker/web.Dockerfile
+      args:
+        HRIS_API_URL: ${HRIS_API_URL}
+        KPI_API_URL: ${KPI_API_URL}
+        FEEDBACK_360_API_URL: ${FEEDBACK_360_API_URL}
+        LMS_API_URL: ${LMS_API_URL}
+        PRISMA_API_URL: ${PRISMA_API_URL}
+    env_file: env/caddy.env
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on: [hris-api, kpi-api, feedback-360-api, lms-api, prisma-api]
+
+  # Backup harian semua database (pg_dump per database, simpan 14 hari).
+  # TODO: enkripsi backup dan salin ke penyimpanan di luar VPS sebelum go-live.
+  backup:
+    image: postgres:17.6-alpine
+    restart: unless-stopped
+    env_file: env/postgres.env
+    environment:
+      PGHOST: postgres
+    volumes:
+      - ./backups:/backups
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        export PGPASSWORD="$$POSTGRES_PASSWORD" PGUSER="$$POSTGRES_USER"
+        while true; do
+          ts=$$(date +%Y%m%d-%H%M%S)
+          for db in hris kpi feedback_360 lms prisma; do
+            pg_dump -Fc "$$db" > "/backups/$$db-$$ts.dump"
+          done
+          find /backups -name '*.dump' -mtime +14 -delete
+          sleep 86400
+        done
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
+  caddy-data:
+  caddy-config:

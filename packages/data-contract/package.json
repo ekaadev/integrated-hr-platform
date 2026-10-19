@@ -1,0 +1,23 @@
+{
+  "name": "@hr/data-contract",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./v1": "./src/v1/index.ts",
+    "./fixtures/employees.json": "./fixtures/employees.json"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "catalog:"
+  },
+  "devDependencies": {
+    "@hr/config": "workspace:*",
+    "@types/bun": "catalog:",
+    "typescript": "catalog:"
+  }
+}

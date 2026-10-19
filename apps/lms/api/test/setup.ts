@@ -1,0 +1,5 @@
+process.env.DATABASE_URL = 'postgres://hr:hr@localhost:5432/lms_test'
+process.env.WEB_ORIGIN = 'http://localhost:3004'
+process.env.BETTER_AUTH_URL = 'http://localhost:4004'
+process.env.BETTER_AUTH_SECRET = 'test-secret-test-secret-test-secret-00'
+process.env.LOG_LEVEL = 'silent'

@@ -1,0 +1,4 @@
+{
+  "extends": "@hr/config/tsconfig.api.json",
+  "include": ["src", "test", "drizzle.config.ts"]
+}

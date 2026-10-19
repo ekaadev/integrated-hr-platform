@@ -1,0 +1,52 @@
+# Reverse proxy + file statis. Skema domain belum diputuskan; host diatur lewat env
+# (lihat infra/env/caddy.env.example). Caddy mengurus TLS otomatis.
+
+(spa) {
+	root * /srv/{args[0]}
+	encode zstd gzip
+	# SPA mode TanStack Start: semua path yang bukan file dilayani oleh _shell.html.
+	try_files {path} /_shell.html
+	file_server
+}
+
+(api) {
+	encode zstd gzip
+	reverse_proxy {args[0]} {
+		header_up X-Forwarded-For {remote_host}
+	}
+}
+
+{$HRIS_WEB_HOST} {
+	import spa hris
+}
+{$HRIS_API_HOST} {
+	import api hris-api:4001
+}
+
+{$KPI_WEB_HOST} {
+	import spa kpi
+}
+{$KPI_API_HOST} {
+	import api kpi-api:4002
+}
+
+{$FEEDBACK_360_WEB_HOST} {
+	import spa feedback-360
+}
+{$FEEDBACK_360_API_HOST} {
+	import api feedback-360-api:4003
+}
+
+{$LMS_WEB_HOST} {
+	import spa lms
+}
+{$LMS_API_HOST} {
+	import api lms-api:4004
+}
+
+{$PRISMA_WEB_HOST} {
+	import spa prisma
+}
+{$PRISMA_API_HOST} {
+	import api prisma-api:4005
+}

@@ -1,0 +1,69 @@
+{
+  "name": "integrated-hr-platform",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.2",
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "apps/*/api",
+      "apps/*/web"
+    ],
+    "catalog": {
+      "@biomejs/biome": "2.5.15",
+      "@elysiajs/cors": "1.4.2",
+      "@elysiajs/eden": "1.4.9",
+      "@elysiajs/openapi": "1.4.16",
+      "@radix-ui/react-label": "2.1.17",
+      "@radix-ui/react-slot": "1.5.0",
+      "@sinclair/typebox": "0.34.52",
+      "@tailwindcss/vite": "4.3.3",
+      "@tanstack/react-form": "1.33.5",
+      "@tanstack/react-query": "5.104.4",
+      "@tanstack/react-router": "1.170.45",
+      "@tanstack/react-start": "1.169.3",
+      "@tanstack/react-table": "9.3.1",
+      "@types/bun": "1.4.3",
+      "@types/react": "19.3.0",
+      "@types/react-dom": "19.3.0",
+      "@vitejs/plugin-react": "6.1.2",
+      "auth": "1.7.11",
+      "better-auth": "1.7.11",
+      "class-variance-authority": "0.7.1",
+      "clsx": "2.1.1",
+      "drizzle-kit": "0.31.11",
+      "drizzle-orm": "0.45.4",
+      "elysia": "1.4.30",
+      "lucide-react": "1.59.0",
+      "pino": "10.4.0",
+      "postgres": "3.4.9",
+      "react": "19.3.1",
+      "react-dom": "19.3.1",
+      "tailwind-merge": "3.7.0",
+      "tailwindcss": "4.3.3",
+      "typescript": "6.0.3",
+      "vite": "8.3.4"
+    }
+  },
+  "scripts": {
+    "infra:up": "docker compose -f infra/compose.yml up -d --wait",
+    "infra:down": "docker compose -f infra/compose.yml down",
+    "db:migrate": "bun run --filter '@hr/*-api' db:migrate",
+    "db:seed": "bun run --filter '@hr/*-api' db:seed",
+    "dev": "bun run --filter '@hr/*-api' --filter '@hr/*-web' dev",
+    "dev:hris": "bun run --filter '@hr/hris-*' dev",
+    "dev:kpi": "bun run --filter '@hr/kpi-*' dev",
+    "dev:feedback-360": "bun run --filter '@hr/feedback-360-*' dev",
+    "dev:lms": "bun run --filter '@hr/lms-*' dev",
+    "dev:prisma": "bun run --filter '@hr/prisma-*' dev",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "typecheck": "bun run --filter '*' typecheck",
+    "test": "bun run --filter '*' test",
+    "build": "bun run --filter '@hr/*-api' --filter '@hr/*-web' build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "typescript": "catalog:"
+  }
+}

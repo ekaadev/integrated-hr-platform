@@ -1,0 +1,3 @@
+[test]
+# Test memakai env dummy; tidak membutuhkan database yang berjalan.
+preload = ["./test/setup.ts"]
