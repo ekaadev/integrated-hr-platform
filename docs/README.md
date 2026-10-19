@@ -1,4 +1,4 @@
-# Dokumentasi
+# Documentation
 
 Dokumen desain disimpan sebagai Claude Docs (bukan di repository). Repository ini mengikuti versi terbaru dari dokumen berikut:
 
@@ -10,7 +10,7 @@ Dokumen desain disimpan sebagai Claude Docs (bukan di repository). Repository in
 | [Roadmap and Time Estimate](https://claude.ai/artifact/XmsnWKPM1NTCWKbpDtvgGW) | Fase dan estimasi |
 | SRS per aplikasi | HRIS, KPI/Performance, 360 Feedback, LMS/Training, PRISMA |
 
-## Keputusan yang diterapkan di skeleton ini
+## Decisions Applied in This Skeleton
 
 | Keputusan | Pilihan | Status di dokumen |
 | --- | --- | --- |
@@ -25,7 +25,7 @@ Dokumen desain disimpan sebagai Claude Docs (bukan di repository). Repository in
 | Lint/format | Biome | Pilihan skeleton (dokumen hanya menyebut "lint") |
 | CI | GitHub Actions: lint, typecheck, test, build | Rekomendasi |
 
-## Hasil verifikasi spike (19 Oktober 2026)
+## Spike Verification Results (19 October 2026)
 
 | Item | Hasil |
 | --- | --- |
@@ -35,7 +35,7 @@ Dokumen desain disimpan sebagai Claude Docs (bukan di repository). Repository in
 | Eden Treaty lintas package di monorepo | Berhasil: web mengimpor `type App` dari `@hr/<app>-api` dan `tsc` lulus. |
 | Waktu `tsc` dengan 30–50 route Elysia | **Belum diukur.** Skeleton baru memiliki 2 route per aplikasi; ukur saat modul SRS pertama ditambahkan. |
 
-## Hal yang masih terbuka
+## Open Items
 
 - Kode error HTTP (`E401`, `E403`, `E404`, `E429`, `E500`) di `@hr/data-contract` adalah usulan dan belum tercantum di Data Contract v1.
 - Plugin Better Auth (organization/admin, api-key untuk PRISMA, two-factor) ditambahkan sesuai SRS.

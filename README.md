@@ -17,7 +17,7 @@ Struktur dan keputusan teknis mengikuti *Architecture Document - Integrated HR P
 | Lint dan format | Biome |
 | Deployment | Docker Compose di satu VPS, Caddy untuk file statis dan reverse proxy |
 
-## Struktur
+## Structure
 
 ```
 apps/
@@ -42,7 +42,7 @@ Aturan monorepo:
 - Frontend hanya mengimpor **tipe** `App` dari API miliknya sendiri, untuk Eden Treaty.
 - Versi dependency dipin **exact** di satu tempat: `workspaces.catalog` pada `package.json` root. Package memakai `"catalog:"`.
 
-## Port development
+## Development Ports
 
 | Aplikasi | API | Web | Database |
 | --- | --- | --- | --- |
@@ -54,7 +54,7 @@ Aturan monorepo:
 
 Layanan pendukung: PostgreSQL `5432`, Mailpit SMTP `1025` / UI `8025`, MinIO opsional `9000`/`9001` (`--profile storage`).
 
-## Memulai
+## Getting Started
 
 Prasyarat: Bun 1.4.2 dan Docker (pengguna Windows memakai WSL2).
 
@@ -80,7 +80,7 @@ curl -X POST http://localhost:4001/api/auth/sign-up/email \
 
 Dokumentasi OpenAPI tiap API tersedia di `http://localhost:400N/openapi`.
 
-## Script root
+## Root Scripts
 
 | Script | Fungsi |
 | --- | --- |
@@ -92,7 +92,7 @@ Dokumentasi OpenAPI tiap API tersedia di `http://localhost:400N/openapi`.
 
 Script per API: `db:generate` (membuat migrasi dari schema Drizzle) dan `auth:generate` (meregenerasi schema Better Auth setelah plugin berubah).
 
-## Pola backend (`apps/<app>/api/src`)
+## Backend Pattern (`apps/<app>/api/src`)
 
 ```
 index.ts        listen; app.ts membangun app dan mengekspor `type App`
@@ -110,7 +110,7 @@ db/             schema Drizzle, migrations/, migrate.ts, seed.ts
 - Rantai `.use()`/route jangan diputus agar tipe `App` untuk Eden Treaty tetap utuh.
 - Contoh modul: `health` (publik) dan `me` (butuh session).
 
-## Pola frontend (`apps/<app>/web/src`)
+## Frontend Pattern (`apps/<app>/web/src`)
 
 - `lib/api.ts`: client Eden Treaty (`credentials: 'include'`). `lib/auth-client.ts`: client Better Auth.
 - `routes/_authed.tsx`: auth guard level route. Semua halaman yang membutuhkan login berada di `routes/_authed/`.
