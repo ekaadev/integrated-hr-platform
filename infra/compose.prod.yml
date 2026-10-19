@@ -1,6 +1,6 @@
-# Production MVP: seluruh aplikasi di satu VPS dengan Docker Compose.
+# Production MVP: all apps on a single VPS with Docker Compose.
 #
-#   cp infra/env/*.env.example -> infra/env/*.env (isi nilai production)
+#   cp infra/env/*.env.example -> infra/env/*.env (fill in production values)
 #   docker compose -f infra/compose.prod.yml --env-file infra/env/caddy.env up -d --build
 #   docker compose -f infra/compose.prod.yml --env-file infra/env/caddy.env run --rm hris-api bun dist/db/migrate.js
 name: hr-platform-prod
@@ -37,7 +37,7 @@ services:
     <<: *api
     build: { context: .., dockerfile: infra/docker/api.Dockerfile, args: { APP: feedback-360 } }
     env_file: env/feedback-360.env
-    # Ollama berjalan langsung di host (mesin dengan GPU), bukan di container.
+    # Ollama runs directly on the host (machine with a GPU), not in a container.
     extra_hosts: ["host.docker.internal:host-gateway"]
   lms-api:
     <<: *api
@@ -69,8 +69,8 @@ services:
       - caddy-config:/config
     depends_on: [hris-api, kpi-api, feedback-360-api, lms-api, prisma-api]
 
-  # Backup harian semua database (pg_dump per database, simpan 14 hari).
-  # TODO: enkripsi backup dan salin ke penyimpanan di luar VPS sebelum go-live.
+  # Daily backup of all databases (pg_dump per database, kept for 14 days).
+  # TODO: encrypt backups and copy them to storage outside the VPS before go-live.
   backup:
     image: postgres:17.6-alpine
     restart: unless-stopped

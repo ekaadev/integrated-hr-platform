@@ -3,7 +3,7 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
-// TanStack Start dalam SPA mode: hasil build berupa file statis, tanpa SSR dan server functions.
+// TanStack Start in SPA mode: the build output is static files, with no SSR and no server functions.
 export default defineConfig({
   server: { port: 3003, strictPort: true },
   preview: { port: 3003, strictPort: true },

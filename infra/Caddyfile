@@ -1,10 +1,10 @@
-# Reverse proxy + file statis. Skema domain belum diputuskan; host diatur lewat env
-# (lihat infra/env/caddy.env.example). Caddy mengurus TLS otomatis.
+# Reverse proxy + static files. The domain scheme is not decided yet; hosts are set through env
+# (see infra/env/caddy.env.example). Caddy handles TLS automatically.
 
 (spa) {
 	root * /srv/{args[0]}
 	encode zstd gzip
-	# SPA mode TanStack Start: semua path yang bukan file dilayani oleh _shell.html.
+	# TanStack Start SPA mode: every path that is not a file is served by _shell.html.
 	try_files {path} /_shell.html
 	file_server
 }

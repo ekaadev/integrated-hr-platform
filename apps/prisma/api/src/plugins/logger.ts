@@ -4,7 +4,7 @@ import { env } from '../env'
 
 export const log = pino({ level: env.LOG_LEVEL, base: { app: 'prisma-api' } })
 
-// Log satu baris per request beserta durasinya.
+// One log line per request, including its duration.
 export const loggerPlugin = new Elysia({ name: 'logger' })
   .derive({ as: 'global' }, () => ({ startedAt: performance.now() }))
   .onAfterResponse({ as: 'global' }, ({ request, set, startedAt }) => {

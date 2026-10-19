@@ -1,5 +1,5 @@
-# Membangun kelima frontend (SPA statis) lalu menyajikannya dengan Caddy.
-# VITE_* dibaca saat build, jadi URL API production diberikan sebagai build arg.
+# Builds all five frontends (static SPAs) and serves them with Caddy.
+# VITE_* is read at build time, so the production API URLs are passed as build args.
 FROM oven/bun:1.4.2 AS build
 WORKDIR /repo
 COPY . .

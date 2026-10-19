@@ -1,14 +1,14 @@
 import './formats'
 import { type Static, type TSchema, Type } from '@sinclair/typebox'
 
-// Konvensi umum Data Contract v1: tanggal ISO 8601 (YYYY-MM-DD), waktu ISO 8601 dengan zona waktu.
+// Data Contract v1 general conventions: ISO 8601 dates (YYYY-MM-DD), ISO 8601 date-times with a time zone.
 export const IsoDate = Type.String({ format: 'date', examples: ['2026-10-18'] })
 export const IsoDateTime = Type.String({
   format: 'date-time',
   examples: ['2026-10-18T14:05:00+07:00'],
 })
 
-// Format error yang sama di semua aplikasi. message ditulis dalam bahasa Indonesia.
+// Same error format in every app. `message` is written in Indonesian, as the Data Contract requires.
 export const ErrorResponse = Type.Object(
   {
     error: Type.Object({
@@ -21,7 +21,7 @@ export const ErrorResponse = Type.Object(
 )
 export type ErrorResponse = Static<typeof ErrorResponse>
 
-// Paginasi: page dan page_size (default 500, maks. 1.000).
+// Pagination: page and page_size (default 500, max 1,000).
 export const PAGE_SIZE_DEFAULT = 500
 export const PAGE_SIZE_MAX = 1000
 

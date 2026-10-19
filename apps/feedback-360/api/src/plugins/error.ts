@@ -6,7 +6,7 @@ const body = (code: string, message: string, field?: string): ErrorResponse => (
   error: field ? { code, message, field } : { code, message },
 })
 
-// Format error konsisten di semua aplikasi: { error: { code, message, field? } }.
+// Consistent error format across all apps: { error: { code, message, field? } }.
 export const errorPlugin = new Elysia({ name: 'error' }).onError(
   { as: 'global' },
   ({ code, error, set }) => {

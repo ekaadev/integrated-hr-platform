@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { authClient } from '../lib/auth-client'
 
-// Auth guard di level route: semua route di bawah _authed/ membutuhkan session.
+// Route-level auth guard: every route under _authed/ requires a session.
 export const Route = createFileRoute('/_authed')({
   beforeLoad: async ({ location }) => {
     const { data } = await authClient.getSession()

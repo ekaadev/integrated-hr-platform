@@ -16,7 +16,7 @@ const EnvSchema = Type.Object({
 
 export type Env = Static<typeof EnvSchema>
 
-// Env divalidasi sekali saat start; aplikasi gagal cepat bila konfigurasi kurang.
+// Env is validated once at startup; the app fails fast when configuration is missing.
 function loadEnv(): Env {
   const raw = Value.Default(EnvSchema, Value.Convert(EnvSchema, { ...process.env }))
   const errors = [...Value.Errors(EnvSchema, raw)]

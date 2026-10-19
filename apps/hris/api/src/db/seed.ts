@@ -3,7 +3,7 @@ import type { Employee } from '@hr/data-contract/v1'
 import { db, sql } from './client'
 import { employee } from './schema'
 
-// Seed data demo terstandar: karyawan yang sama dipakai di kelima aplikasi.
+// Standardized demo seed data: the same employees are used in all five apps.
 const rows = (employees as Employee[]).map((e) => ({
   employeeId: e.employee_id,
   fullName: e.full_name,

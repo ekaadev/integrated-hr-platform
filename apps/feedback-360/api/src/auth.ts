@@ -4,9 +4,9 @@ import { db } from './db/client'
 import * as schema from './db/schema'
 import { env, webOrigins } from './env'
 
-// Better Auth: session berbasis cookie httpOnly, disimpan di database aplikasi ini.
-// Plugin (organization, admin, api-key, two-factor) ditambahkan saat SRS membutuhkannya;
-// setiap perubahan plugin wajib diikuti `bun run auth:generate` dan `bun run db:generate`.
+// Better Auth: httpOnly cookie-based session, stored in this app's database.
+// Plugins (organization, admin, api-key, two-factor) are added when the SRS needs them;
+// every plugin change must be followed by `bun run auth:generate` and `bun run db:generate`.
 export const auth = betterAuth({
   appName: '360 Feedback',
   baseURL: env.BETTER_AUTH_URL,
@@ -16,14 +16,14 @@ export const auth = betterAuth({
   emailAndPassword: { enabled: true },
   user: {
     additionalFields: {
-      // Setiap user dikaitkan ke employee_id dari Data Contract.
+      // Every user is linked to an employee_id from the Data Contract.
       employeeId: { type: 'string', required: false, input: false },
     },
   },
   advanced: {
-    // Di production API berada di belakang reverse proxy (Caddy) yang meneruskan IP klien.
+    // In production the API sits behind a reverse proxy (Caddy) that forwards the client IP.
     ipAddress: { ipAddressHeaders: ['x-forwarded-for'] },
-    // Frontend dan API berbeda origin: cookie harus SameSite=None + Secure di production.
+    // Frontend and API are on different origins: cookies must be SameSite=None + Secure in production.
     defaultCookieAttributes:
       env.NODE_ENV === 'production'
         ? { sameSite: 'none', secure: true, httpOnly: true }

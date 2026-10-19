@@ -1,15 +1,15 @@
-// Kode error validasi dari Data Contract v1 (jalur file dan API).
+// Validation error codes from Data Contract v1 (file and API paths).
 export const ValidationErrorCode = {
-  REQUIRED: 'E001', // Kolom wajib kosong
-  INVALID_FORMAT: 'E002', // Tipe atau format salah
-  OUT_OF_RANGE: 'E003', // Nilai di luar rentang atau enum
-  UNKNOWN_EMPLOYEE: 'E004', // employee_id tidak dikenal
-  DUPLICATE_KEY: 'E005', // Kunci duplikat dalam file
-  UNKNOWN_COLUMN: 'E006', // Kolom tidak dikenal atau hilang
+  REQUIRED: 'E001', // Required column is empty
+  INVALID_FORMAT: 'E002', // Wrong type or format
+  OUT_OF_RANGE: 'E003', // Value outside the range or enum
+  UNKNOWN_EMPLOYEE: 'E004', // Unknown employee_id
+  DUPLICATE_KEY: 'E005', // Duplicate key in file
+  UNKNOWN_COLUMN: 'E006', // Unknown or missing column
 } as const
 
-// Kode error tingkat HTTP. USULAN: belum tercantum di Data Contract v1,
-// perlu dikonfirmasi dan ditambahkan ke dokumen (kenaikan MINOR).
+// HTTP-level error codes. PROPOSAL: not yet listed in Data Contract v1; they need to be
+// confirmed and added to the document (MINOR bump).
 export const HttpErrorCode = {
   UNAUTHORIZED: 'E401',
   FORBIDDEN: 'E403',

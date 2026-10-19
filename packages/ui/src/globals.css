@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Komponen @hr/ui ikut dipindai Tailwind dari aplikasi mana pun yang mengimpor file ini. */
+/* @hr/ui components are scanned by Tailwind in any app that imports this file. */
 @source "./";
 
 @custom-variant dark (&:is(.dark *));

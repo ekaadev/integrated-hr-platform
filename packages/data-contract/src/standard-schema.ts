@@ -2,8 +2,8 @@ import type { Static, TSchema } from '@sinclair/typebox'
 import { Value } from '@sinclair/typebox/value'
 import './v1/formats'
 
-// Subset antarmuka Standard Schema v1 (https://standardschema.dev) yang dibutuhkan
-// TanStack Form. TypeBox 0.34 belum mengimplementasikannya, jadi schema dibungkus di sini.
+// Subset of the Standard Schema v1 interface (https://standardschema.dev) that TanStack
+// Form needs. TypeBox 0.34 does not implement it yet, so the schema is wrapped here.
 export interface StandardSchemaV1<Output> {
   readonly '~standard': {
     readonly version: 1

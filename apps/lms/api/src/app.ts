@@ -20,8 +20,8 @@ const defaultDeps = (): Deps => ({
   health: createHealthService({ app: APP_NAME, pingDb: () => db.execute(dbSql`select 1`) }),
 })
 
-// App factory: dipakai index.ts (listen) dan test (app.handle) tanpa membuka port.
-// Rantai .use() jangan diputus agar tipe App untuk Eden Treaty tetap utuh.
+// App factory: used by index.ts (listen) and tests (app.handle) without opening a port.
+// Do not break the .use() chain, so the App type for Eden Treaty stays intact.
 export const createApp = (deps: Deps = defaultDeps()) =>
   new Elysia()
     .use(errorPlugin)

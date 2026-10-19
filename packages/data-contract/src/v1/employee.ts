@@ -7,8 +7,8 @@ export const EmployeeStatus = Type.Union(
 )
 export type EmployeeStatus = Static<typeof EmployeeStatus>
 
-// Entitas bersama employee. HRIS adalah sumber utama; KPI, 360 Feedback, dan LMS
-// menyimpan salinan minimal yang diisi lewat import atau API dengan schema yang sama.
+// Shared employee entity. HRIS is the primary source; KPI, 360 Feedback, and LMS keep a
+// minimal copy filled through import or API with the same schema.
 export const Employee = Type.Object(
   {
     employee_id: Type.String({ minLength: 1, maxLength: 32, examples: ['EMP-0042'] }),

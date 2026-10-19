@@ -1,4 +1,4 @@
-// Versi terbaru Data Contract. Aplikasi sebaiknya mengimpor versi eksplisit (@hr/data-contract/v1).
+// Latest Data Contract version. Apps should import an explicit version (@hr/data-contract/v1).
 
 export * from './standard-schema'
 export * from './v1'

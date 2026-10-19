@@ -12,7 +12,7 @@ const LoginInput = Type.Object({
   password: Type.String({ minLength: 8 }),
 })
 
-// Validasi form memakai schema TypeBox lewat adapter Standard Schema.
+// Form validation uses the TypeBox schema through the Standard Schema adapter.
 const loginSchema = toStandardSchema(LoginInput, {
   email: 'Email tidak valid',
   password: 'Password minimal 8 karakter',

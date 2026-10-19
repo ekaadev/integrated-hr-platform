@@ -2,9 +2,9 @@ import { HttpErrorCode } from '@hr/data-contract/v1'
 import { Elysia } from 'elysia'
 import { auth } from '../auth'
 
-// Handler Better Auth dipasang eksplisit di /api/auth/* (bukan .mount() di root, yang
-// akan menelan semua request tak dikenal sehingga format error 404 hilang). Macro `auth: true` pada route
-// mewajibkan session dan menyediakan `user` serta `session` ke handler.
+// The Better Auth handler is attached explicitly at /api/auth/* (not .mount() at the root,
+// which would swallow every unknown request and lose the 404 error format). The `auth: true`
+// route macro requires a session and provides `user` and `session` to the handler.
 export const authPlugin = new Elysia({ name: 'auth' })
   .all('/api/auth/*', ({ request }) => auth.handler(request), { detail: { hide: true } })
   .macro({

@@ -2,8 +2,8 @@ import { date, index, pgEnum, pgTable, text, timestamp, varchar } from 'drizzle-
 
 export const employeeStatus = pgEnum('employee_status', ['active', 'on_leave', 'terminated'])
 
-// Master data karyawan sesuai entitas `employee` di Data Contract v1.
-// Di HRIS tabel ini adalah sumber employee_id; di aplikasi lain tabel yang sama adalah salinan lokal.
+// Employee master data following the `employee` entity in Data Contract v1.
+// In HRIS this table is the source of employee_id; in the other apps the same table is a local copy.
 export const employee = pgTable(
   'employee',
   {

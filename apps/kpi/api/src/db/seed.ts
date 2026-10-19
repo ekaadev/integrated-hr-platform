@@ -3,8 +3,8 @@ import type { Employee } from '@hr/data-contract/v1'
 import { db, sql } from './client'
 import { employee } from './schema'
 
-// Seed data demo terstandar: salinan lokal master data karyawan dari HRIS.
-// Di lingkungan nyata tabel ini diisi lewat import atau API dari HRIS tim atau HRIS klien.
+// Standardized demo seed data: a local copy of the employee master data from HRIS.
+// In a real environment this table is filled through import or API from the team's HRIS or the client's HRIS.
 const rows = (employees as Employee[]).map((e) => ({
   employeeId: e.employee_id,
   fullName: e.full_name,

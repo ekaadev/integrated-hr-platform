@@ -1,5 +1,5 @@
-# Layanan pendukung untuk development. Aplikasi Bun berjalan langsung di mesin.
-# Versi image dipin dan disamakan dengan compose.prod.yml.
+# Supporting services for development. Bun apps run directly on the machine.
+# Image versions are pinned and kept the same as in compose.prod.yml.
 name: hr-platform
 
 services:
@@ -13,7 +13,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      # Satu instance, lima database (satu per aplikasi).
+      # One instance, five databases (one per app).
       - ./postgres/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U hr -d postgres"]
@@ -32,7 +32,7 @@ services:
       timeout: 3s
       retries: 5
 
-  # Opsional: jalankan dengan `docker compose --profile storage up -d` bila penyimpanan file dibutuhkan.
+  # Optional: run with `docker compose --profile storage up -d` when file storage is needed.
   minio:
     image: minio/minio:RELEASE.2025-09-07T16-13-09Z
     profiles: ["storage"]
